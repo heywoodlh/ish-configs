@@ -1,0 +1,26 @@
+[user]
+    email = l.spencer.heywood@protonmail.com
+    name = Spencer Heywood
+[alias]
+    lu = !git for-each-ref --sort='-authordate:iso8601' --format='%(color:bold red)%(objectname:short)%(color:reset) - %(color:reset)%(color:yellow) (%(refname:short)) %(color:reset)%(color:white)%(subject)%(color:reset) %(color:bold green)(%(authordate:relative))%(color:reset)%(color:dim white) %(color:bold blue)<%(authorname)>' refs/heads refs/remotes
+[core]
+    editor = vim
+    autocrlf = input
+    whitespace = cr-at-eol
+    pager = less -+F
+[mergetool]
+    prompt = false
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+[color]
+    ui = auto
+[diff]
+    renames = copies
+[push]
+    default = simple
+[format]
+    pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset
+[pull]
+    rebase = false
+
