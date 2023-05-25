@@ -8,7 +8,8 @@ apk update
 apk add vim git coreutils openssh-client mosh tmux curl
 
 # Setup tmux
-curl -L 'https://raw.githubusercontent.com/heywoodlh/conf/dde8be87772faad8f90d2d2c5257018677795506/dotfiles/tmux.conf' -o $HOME/.tmux.conf
+cp tmux.conf $HOME/.tmux.conf
+grep TMUX $HOME/.tmux.conf || echo 'env | grep -q TMUX || tmux && exit' >> $HOME/.profile
 
 # Install rbw
 apk add cargo
