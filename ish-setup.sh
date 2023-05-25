@@ -1,16 +1,44 @@
-#!/usr/bin/env ash
-
-## Enable location, allow iSH to run in background
-grep -q '/dev/location' $HOME/.profile || echo 'cat /dev/location > /dev/null &' >> $HOME/.profile && source $HOME/.profile
+#!/usr/bin/env bash
 
 # Install my dependencies
 apk update
-apk add vim git coreutils openssh-client mosh tmux curl
+apk add vim git coreutils openssh-client mosh screen curl pass gnupg
 
-# Setup tmux
-cp tmux.conf $HOME/.tmux.conf
-grep TMUX $HOME/.tmux.conf || echo 'env | grep -q TMUX || tmux && exit' >> $HOME/.profile
+# Setup pass
+gpg --list-secret-keys | grep -q heywoodlh@ish || GPG_SETUP="false"
 
-# Install rbw
-apk add cargo
-cargo install rbw
+if [[ ${GPG_SETUP} == "false" ]]
+then
+   printf "Key-Type: RSA\nKey-Length: 3072\nName-Real: Spencer Heywood\nName-Email: heywoodlh@ish\nExpire-Date: 0\n" > /tmp/gpg.conf
+   gpg --generate-key --batch /tmp/gpg.conf
+   rm /tmp/gpg.conf
+fi
+pass ls > /dev/null || pass init heywoodlh@ish
+
+# Setup a new SSH key stored in pass
+pass ssh/id_rsa > /dev/null || PASS_SSH_SETUP="false"
+if [[ ${PASS_SSH_SETUP} == "false" ]]
+then
+    ssh-keygen -f /tmp/id_rsa -N ""
+    pass insert -m ssh/id_rsa < /tmp/id_rsa
+    pass insert -m ssh/id_rsa.pub < /tmp/id_rsa.pub
+    printf "ssh key info stored in password store\n"
+    printf "private key: pass ssh/id_rsa\n"
+    printf "public key: pass ssh/id_rsa.pub\n"
+    rm /tmp/id_rsa
+    rm /tmp/id_rsa.pub
+fi
+
+# Setup profile
+cp profile ~/.profile
+
+# Setup screen
+cp screenrc ~/.screenrc
+
+# Setup vim
+## Install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+cp vimrc ~/.vimrc
+
+# Create tmp dir
+mkdir -p ~/tmp
