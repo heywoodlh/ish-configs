@@ -103,3 +103,10 @@ set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Ignore case with search
 set ignorecase smartcase
+
+" Show trailing whitespaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
+" Set shell to /bin/ash
+set shell=/bin/ash

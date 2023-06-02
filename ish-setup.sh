@@ -2,7 +2,7 @@
 
 # Install my dependencies
 apk update
-apk add vim git coreutils openssh-client mosh screen curl pass gnupg neofetch tmux
+apk add vim git coreutils openssh-client mosh screen curl pass gnupg neofetch tmux file
 
 # Setup pass
 gpg --list-secret-keys | grep -q heywoodlh@ish || GPG_SETUP="false"
