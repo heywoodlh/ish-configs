@@ -1,26 +1,24 @@
 # Use location to run in background
 cat /dev/location > /dev/null &
 
-__git_ps1() {
+function git_branch () {
+  local current_branch
   local git_branch
-  git_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  if [[ $? -eq 0 ]]; then
-    printf " (%s)" "$git_branch"
-  fi
+  current_branch=$(git branch 2>/dev/null | grep -e "^*")
+  [[ $? == 0 ]] && git_branch=$(printf "${current_branch}" | awk "{print \"[\" \$2 \"]\"}") && printf "%s" "${git_branch}\n"
 }
 
-export PS1="\xee\x9c\x91 [\w]$(__git_ps1) "
+export PS1='$(git_branch) [\w] '
 
 alias ssh-unlock='pass ssh/id_rsa | ssh-add -t 4h -' 
-alias switch-ish='cd ~/opt/ish-configs && ./ish-setup.sh'
+alias ish-switch='cd ~/opt/ish-configs && ./ish-setup.sh'
+alias gpsup='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
 # Start ssh-agent
 SSH_ENV="$HOME/.ssh/agent-environment"
 
 function start_agent {
-    echo "Initialising new SSH agent..."
     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    echo succeeded
     chmod 600 "${SSH_ENV}"
     . "${SSH_ENV}" > /dev/null
     /usr/bin/ssh-add;
@@ -33,4 +31,12 @@ if [ -f "${SSH_ENV}" ]; then
     }
 else
     start_agent;
+fi
+
+# Start tmux
+env | grep -iq tmux
+if [[ $? != 0 ]]
+then
+    tmux
+    exit
 fi

@@ -2,7 +2,7 @@
 
 # Install my dependencies
 apk update
-apk add vim git coreutils openssh-client mosh screen curl pass gnupg
+apk add vim git coreutils openssh-client mosh screen curl pass gnupg neofetch tmux
 
 # Setup pass
 gpg --list-secret-keys | grep -q heywoodlh@ish || GPG_SETUP="false"
@@ -45,3 +45,6 @@ cp vimrc ~/.vimrc
 
 # Create tmp dir
 mkdir -p ~/tmp
+
+# Setup tmux
+cp tmux.conf ~/.tmux.conf

@@ -96,7 +96,7 @@ set dir=~/tmp
 " back to line cursor when in normal mode
 let &t_SI.="\e[5 q" "SI = INSERT mode
 let &t_SR.="\e[5 q" "SR = REPLACE mode
-let &t_EI.="\e[5 q" "EI = NORMAL mode (ELSE)
+let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
 
 " Convert tabs to spaces
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
