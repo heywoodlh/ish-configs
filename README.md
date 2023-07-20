@@ -2,6 +2,8 @@
 
 Tools/resources for configuring iSH on i[Pad]OS
 
+(Now with (Nord theme![./nord-theme.json])
+
 ![screenshot](./screenshot.png)
 
 ### Requirements:
