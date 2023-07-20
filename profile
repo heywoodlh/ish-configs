@@ -32,6 +32,9 @@ else
     start_agent;
 fi
 
+# Use ~/.profile.d/custom if it exists
+[[ -e ~/.profile.d/custom ]] && source ~/.profile.d/custom
+
 # Start tmux
 env | grep -iq tmux
 if [[ $? != 0 ]]
